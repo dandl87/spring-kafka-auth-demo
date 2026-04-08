@@ -2,7 +2,7 @@
 
 
 
-Demo project che mostra un'architettura moderna basata su:
+Demo project che mostra un'architettura basata su:
 
 
 
