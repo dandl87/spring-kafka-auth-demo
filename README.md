@@ -1,124 +1,170 @@
-🚀 Kafka Order Platform
+# 🚀 Kafka Order Platform
 
-Distributed system demo built with Spring Boot, OAuth2 and Apache Kafka, with a Next.js frontend.
+Distributed system demo built with **Spring Boot, OAuth2 and Apache Kafka**, with a **Next.js frontend**.
 
-👉 This project demonstrates how to design a secure, event-driven architecture with real-world challenges like token propagation, async processing and distributed debugging.
+👉 This project demonstrates a **secure, event-driven architecture** with token propagation and async processing.
 
-🧱 Architecture
+---
+
+## 🧱 Architecture
 
 The system is composed of:
 
-Auth Server (Spring Boot)
-OAuth2 Authorization Server issuing JWT tokens
-Order Service (Spring Boot)
-Secured REST API that publishes events to Kafka
-Kafka + Zookeeper
-Event streaming platform
-Order UI (Next.js)
-Frontend using NextAuth for authentication
-🔄 High-Level Flow
-User → Next.js (NextAuth) → API Route → Order Service → Kafka
-🔐 Authentication Flow
-User logs in via OAuth2 (Authorization Code Flow)
-NextAuth stores session (JWT in cookies)
-Frontend calls Next.js API routes (server-side)
-API routes forward requests with Bearer token
-Order Service validates JWT via Spring Security
+- **Auth Server (Spring Boot)**  
+  OAuth2 Authorization Server issuing JWT tokens  
 
-👉 Key aspect: token never exposed to the browser directly
+- **Order Service (Spring Boot)**  
+  Secured REST API that publishes events to Kafka  
 
-📡 Event-Driven Flow (Kafka)
-Order Service publishes events to Kafka topic:
-order-created
-Events represent:
-Order ID
-User info
-Order details
+- **Kafka + Zookeeper**  
+  Event streaming platform  
 
-👉 This decouples:
+- **Order UI (Next.js)**  
+  Frontend using NextAuth for authentication  
 
-order processing
-future services (notifications, payments, etc.)
-🚀 Getting Started
-▶ Windows
+---
+
+## 🔄 High-Level Flow
+
+```
+User → Next.js → API Route → Order Service → Kafka
+```
+
+---
+
+## 🔐 Authentication Flow
+
+1. User logs in via OAuth2 (Authorization Code Flow)  
+2. NextAuth stores session (JWT in cookies)  
+3. Frontend calls Next.js API routes  
+4. API routes forward requests with Bearer token  
+5. Order Service validates JWT  
+
+👉 Token never exposed directly to the browser
+
+---
+
+## 📡 Event-Driven Flow (Kafka)
+
+- Order Service publishes events to topic:
+  - `order-created`
+
+- Events include:
+  - Order ID  
+  - User info  
+  - Order details  
+
+---
+
+## 🚀 Getting Started
+
+### ▶ Windows
+
+```bash
 start.bat
-▶ Linux / macOS
+```
+
+### ▶ Linux / macOS
+
+```bash
 chmod +x start.sh
 ./start.sh
-▶ Manual Start
-1. Start backend
+```
+
+---
+
+### ▶ Manual Start
+
+#### 1. Start backend
+
+```bash
 docker compose up --build
-2. Start frontend
+```
+
+#### 2. Start frontend
+
+```bash
 cd order-ui
 npm install
 npm run dev
-🌐 Services
-Service	URL
-Frontend	http://localhost:3000
+```
 
-Auth Server	http://localhost:9090
+---
 
-Order Service	http://localhost:8080
-⚙️ Frontend Configuration
+## 🌐 Services
+
+| Service        | URL                    |
+|----------------|------------------------|
+| Frontend       | http://localhost:3000 |
+| Auth Server    | http://localhost:9090 |
+| Order Service  | http://localhost:8080 |
+
+---
+
+## ⚙️ Frontend Configuration
 
 Create:
 
+```
 order-ui/.env.local
+```
+
+```env
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=supersecretkey
-🧪 Demo Flow
-Open frontend
-Login via OAuth2
-user / password
-Create an order
-Order is:
-validated
-sent to backend
-published to Kafka
-🛠 Tech Stack
-Backend
-Java 21
-Spring Boot
-Spring Security
-Spring Authorization Server
-Apache Kafka
-Frontend
-Next.js (App Router)
-NextAuth
-React
-Infrastructure
-Docker
-Docker Compose
-🧠 Key Challenges Solved
-🔑 Token Propagation
+```
 
-Managing JWT across:
+---
 
-NextAuth (frontend session)
-Next.js API routes
-Spring Boot backend
-🔐 Secure API Design
-No token exposure in browser
-Server-side forwarding only
-⚡ Async Communication
-Event-driven architecture via Kafka
-Decoupling services
-🐳 Docker Networking
-Handling service-to-service communication
-Avoiding localhost pitfalls
-📌 Purpose
+## 🧪 Demo Flow
 
-This project is designed to demonstrate:
+1. Open frontend  
+2. Login via OAuth2 (`user / password`)  
+3. Create an order  
+4. Order is published to Kafka  
 
-Secure microservice communication
-OAuth2 integration across full stack
-Event-driven architecture with Kafka
-Real-world distributed system issues
-🔮 Future Improvements
-Add Kafka consumers (e.g. payment service)
-Introduce retries and dead-letter topics
-Add integration tests with Testcontainers
-Add API Gateway
-📄 License
+---
+
+## 🛠 Tech Stack
+
+### Backend
+- Java 21  
+- Spring Boot  
+- Spring Security  
+- Spring Authorization Server  
+- Apache Kafka  
+
+### Frontend
+- Next.js  
+- NextAuth  
+- React  
+
+### Infrastructure
+- Docker  
+- Docker Compose  
+
+---
+
+## 🧠 Key Challenges Solved
+
+- Token propagation across services  
+- Secure API design  
+- Event-driven communication  
+- Docker networking issues  
+
+---
+
+## 📌 Purpose
+
+This project demonstrates:
+
+- Secure microservice communication  
+- OAuth2 integration  
+- Event-driven architecture  
+- Full-stack integration  
+
+---
+
+## 📄 License
 
 MIT
