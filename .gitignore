@@ -11,5 +11,10 @@ target/
 .DS_Store
 Thumbs.db
 
+# Node
+order-ui/node_modules/
+order-ui/.next/
+order-ui/out/
+
 # Docker
 *.pid
