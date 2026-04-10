@@ -50,9 +50,8 @@ User → Next.js → API Route → Order Service → Kafka
   - `order-created`
 
 - Events include:
-  - Order ID  
-  - User info  
-  - Order details  
+  - Product Name
+  - Quantity
 
 ---
 
