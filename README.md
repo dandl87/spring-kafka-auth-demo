@@ -4,11 +4,9 @@ Distributed system demo built with **Spring Boot, OAuth2 and Apache Kafka**, wit
 
 ---
 
-<<<<<<< HEAD
 Demo project che mostra un'architettura basata su:
 =======
 ## 🧱 Architecture
->>>>>>> 47e56e8a30eb260e0f7e219217a7c0aba6298de4
 
 The system consists of:
 
