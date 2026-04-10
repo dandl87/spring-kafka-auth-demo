@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   const body = await req.json();
 
-  const res = await fetch("http://order-service:8080/orders", {
+  const res = await fetch("http://localhost:8080/orders", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

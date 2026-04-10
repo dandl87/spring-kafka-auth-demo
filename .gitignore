@@ -11,8 +11,5 @@ target/
 .DS_Store
 Thumbs.db
 
-# Env
-.env
-
 # Docker
 *.pid
