@@ -14,9 +14,8 @@ public class OrderCreatedConsumer {
     @KafkaListener(topics = "order-created")
     public void consume(OrderCreatedEvent event){
 
-        logger.info("Received event from kafka: product={}, quantity={}",
-                event.productName(),
-                event.quantity());
+        logger.info("Received event from kafka: items={} ",
+                event.items() );
 
     }
 }
