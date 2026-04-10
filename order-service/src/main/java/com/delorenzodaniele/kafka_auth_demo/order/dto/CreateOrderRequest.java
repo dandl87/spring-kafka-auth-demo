@@ -1,7 +1,8 @@
 package com.delorenzodaniele.kafka_auth_demo.order.dto;
 
+import java.util.List;
+
 public record CreateOrderRequest(
-        String productName,
-        int quantity
+        List<OrderItem> items
 ) {
 }

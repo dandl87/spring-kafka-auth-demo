@@ -33,10 +33,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://auth-server:9090
+          jwk-set-uri: http://auth-server:9090/oauth2/jwks
 
 logging:
   level:
     org.springframework.security: DEBUG
+    com.delorenzodaniele.kafka_auth_demo.order.controller: DEBUG
 
 

@@ -19,8 +19,7 @@ public class OrderService {
 
 
     public void createOrder(CreateOrderRequest request) {
-        logger.info("Creating order: product={}, quantity={}",request.productName(), request.quantity());
-        OrderCreatedEvent event = new OrderCreatedEvent(request.productName(), request.quantity());
+        OrderCreatedEvent event = new OrderCreatedEvent(request.items());
         orderProducer.sendOrderCreated(event);
         logger.info("Order created successfully");
     }

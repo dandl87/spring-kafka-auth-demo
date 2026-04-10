@@ -1,172 +1,168 @@
-\#  Kafka Auth Demo
+# Kafka Order Platform
 
+Distributed system demo built with **Spring Boot, OAuth2 and Apache Kafka**, with a **Next.js frontend**.
 
+---
 
-Demo project che mostra un'architettura moderna basata su:
+## 🧱 Architecture
 
+The system consists of:
 
+* **Auth Server (Spring Boot)**
+  OAuth2 Authorization Server issuing JWT tokens
 
-\-  OAuth2 / OIDC (Spring Authorization Server)
+* **Order Service (Spring Boot)**
+  Secured REST API that publishes events to Kafka
 
-\-  JWT Resource Server (Spring Security)
+* **Kafka + Zookeeper**
+  Event streaming platform
 
-\-  Event-driven architecture con Apache Kafka
+* **Order UI (Next.js)**
+  Frontend using NextAuth for authentication
 
-\-  Ambiente containerizzato con Docker Compose
+---
 
+## 🔐 Authentication Flow
 
+1. User logs in via OAuth2 (Authorization Code Flow)
+2. NextAuth stores session (JWT in cookies)
+3. Frontend calls Next.js API routes
+4. API routes forward requests with Bearer token
+5. Order Service validates JWT and processes request
 
-\---
+---
 
+## 🚀 Getting Started
 
+### ▶ Windows
 
-\##  Architettura
+Run:
 
+```bat
+start.bat
+```
 
+---
 
-Il sistema è composto da:
-
-
-
-| Service        | Descrizione |
-
-|----------------|------------|
-
-| auth-server    | Authorization Server OAuth2 (JWT issuer) |
-
-| order-service  | REST API protetta con JWT |
-
-| kafka          | Message broker |
-
-| zookeeper      | Coordinatore Kafka |
-
-
-
-\---
-
-
-
-\##  Flusso principale
-
-
-
-1\. Il client richiede un \*\*access token\*\* all'Auth Server  
-
-2\. L'Auth Server restituisce un \*\*JWT firmato\*\*  
-
-3\. Il client invia una request all'Order Service con il token  
-
-4\. L'Order Service:
-
-&#x20;  - valida il JWT
-
-&#x20;  - pubblica un evento su Kafka  
-
-5\. Un consumer Kafka riceve l'evento e simula una notifica  
-
-
-
-\---
-
-
-
-\##  Avvio rapido
-
-
-
-\###  Linux / Mac
-
-
+### ▶ Linux / macOS
 
 ```bash
-
-chmod +x start.sh
-
 ./start.sh
+```
 
+---
 
+### ▶ Manual Start
 
-\### Win
+#### 1. Start backend
 
-start.bat
+```bash
+docker compose up --build
+```
 
+#### 2. Start frontend
 
+```bash
+cd order-ui
+npm install
+npm run dev
+```
 
+---
 
+## 🌐 Services
 
-Stop servizi
+| Service       | URL                   |
+| ------------- | --------------------- |
+| Frontend      | http://localhost:3000 |
+| Auth Server   | http://localhost:9090 |
+| Order Service | http://localhost:8080 |
 
-docker compose down
+---
 
+## ⚙️ Frontend Configuration
 
+Create `order-ui/.env.local`:
 
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=supersecretkey
+```
 
+⚠️ Required for session decryption.
 
-Ottenere un token (Client Credentials Flow)
+---
 
+## 🧪 Demo Flow
 
+1. Open frontend
+2. Login via OAuth2 (username:user - password:password)
+3. Add products to cart
+4. Create order
+5. Order is sent to backend and published to Kafka
 
-curl -u orders-client:orders-secret \\
+---
 
-&#x20; -X POST http://localhost:9090/oauth2/token \\
+## 📡 Request Flow
 
-&#x20; -H "Content-Type: application/x-www-form-urlencoded" \\
+```
+Browser → Next.js API → Order Service → Kafka
+```
 
-&#x20; -d "grant\_type=client\_credentials\&scope=orders.write"
+---
 
+## 🛠 Tech Stack
 
+### Backend
 
-Chiamata API protetta
+* Java 21
+* Spring Boot
+* Spring Security
+* Spring Authorization Server
+* Apache Kafka
 
+### Frontend
 
+* Next.js 15 (App Router)
+* NextAuth v4
+* React
 
-curl -X POST http://localhost:8080/orders \\
+### Infrastructure
 
-&#x20; -H "Authorization: Bearer <ACCESS\_TOKEN>" \\
+* Docker
+* Docker Compose
 
-&#x20; -H "Content-Type: application/json" \\
+---
 
-&#x20; -d '{"productName":"Pizza","quantity":2}'
+## ⚠️ Notes
 
+* NextAuth v4 requires **Node runtime** in API routes
+* Session is stored in encrypted cookies
+* `NEXTAUTH_SECRET` must be set
+* Docker networking differs from localhost (important for service calls)
 
+---
 
+## 🧠 Key Challenges Solved
 
+* OAuth2 integration across frontend and backend
+* Token propagation from Next.js to Spring Boot
+* Handling session in Next.js API routes
+* Managing Docker vs localhost networking
+* Debugging 401 issues in distributed systems
 
-Sicurezza
+---
 
-JWT firmati con chiave RSA
+## 📌 Purpose
 
-Validazione tramite issuer-uri
+This project demonstrates:
 
-Autorizzazione basata su scope (orders.write)
+* Secure microservice communication
+* Event-driven architecture with Kafka
+* Full-stack integration (Next.js + Spring Boot)
 
-Supporto a:
+---
 
-Authorization Code Flow (user login)
+## 📄 License
 
-Client Credentials Flow (machine-to-machine)
-
-
-
-Tech Stack
-
-Java 21
-
-Spring Boot
-
-Spring Security
-
-Spring Authorization Server
-
-Apache Kafka
-
-Docker / Docker Compose
-
-
-
-Autore
-
-
-
-Daniele De Lorenzo
-
+MIT
